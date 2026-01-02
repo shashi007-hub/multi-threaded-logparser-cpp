@@ -54,7 +54,7 @@ void ThreadPool::workerLoop() {
                 return m_stop || !m_tasks.empty();
             });
 
-            if (m_stop || m_tasks.empty()) {
+            if (m_stop && m_tasks.empty()) {
                 return;
                 ///graceful exit
             }

@@ -8,8 +8,8 @@
 #include "writeParsedLogs.h"
 
 int main() {
-    constexpr size_t QUEUE_CAPACITY = 100000;
-    constexpr size_t NUM_PARSERS = 4;
+    constexpr size_t QUEUE_CAPACITY = 1000000;
+    constexpr size_t NUM_PARSERS = 8;
 
     //Step 1 --> Create Safe Queue
     SafeQueue<std::string> queue(QUEUE_CAPACITY);
@@ -31,8 +31,11 @@ int main() {
     //Step 4 --> Start Single Reade Thread
     pool.submit(LogReaderThread("/Users/shashi/CLionProjects/multithreadedparser/logfiles.log", queue));
 
+    std::cout << "Before shutdown\n";
     //Step 5  --> Wait for readers to finish --> Join all threads to main thread and wait for exit
     pool.shutdown();
+    std::cout << "After shutdown\n";
+
 
     //Step 6 --> Aggregate all the LogRecords from all shared pointers
     LogAggregator aggregator;
